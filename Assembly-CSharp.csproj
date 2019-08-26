@@ -64,31 +64,34 @@
   <ItemGroup>
     <Compile Include="Assets\Script\BallDefine.cs" />
     <Compile Include="Assets\Script\BallMovement.cs" />
+    <Compile Include="Assets\Script\GlobalKeySettingComponent.cs" />
     <Compile Include="Assets\Script\GMScript.cs" />
+    <Compile Include="Assets\Script\KeySettingCanvas.cs" />
+    <Compile Include="Assets\Script\KeySettingElement.cs" />
     <Compile Include="Assets\Script\PlayerLookAtCenter.cs" />
     <Compile Include="Assets\Script\PlayerMovement.cs" />
     <Compile Include="Assets\Script\ScoreComponent.cs" />
     <Compile Include="Assets\Script\ScoreScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>G:/Tools/Unity2019/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -274,13 +277,13 @@
       <HintPath>G:/Tools/Unity2019/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>G:/GameDev/UnityLab/platform/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>G:/GameDev/GitHub/CircleBreakout/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>G:/Tools/Unity2019/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

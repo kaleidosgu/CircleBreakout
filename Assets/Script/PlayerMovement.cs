@@ -33,6 +33,24 @@ public class PlayerMovement : MonoBehaviour
     {
         rotationRadius = SmallRadius;
         m_rad = InitArc;
+
+        GlobalKeySettingComponent _keycom = FindObjectOfType<GlobalKeySettingComponent>();
+        if(_keycom != null)
+        {
+            if (PlayerOwnState == BallDefine.BallStateDefine.BallStateDefine_Blue)
+            {
+                LeftKeyCode = _keycom.KeycodeLeft1P;
+                RightKeyCode = _keycom.KeycodeRight1P;
+                AdjustRadius = _keycom.KeycodeUp1P;
+            }
+            else if (PlayerOwnState == BallDefine.BallStateDefine.BallStateDefine_Red)
+            {
+                LeftKeyCode = _keycom.KeycodeLeft2P;
+                RightKeyCode = _keycom.KeycodeRight2P;
+                AdjustRadius = _keycom.KeycodeUp2P;
+            }
+        }
+
         _changePos();
     }
 
