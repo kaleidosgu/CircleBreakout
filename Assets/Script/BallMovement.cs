@@ -140,9 +140,10 @@ public class BallMovement : MonoBehaviour
                 m_futureState = BallDefine.BallStateDefine.BallStateDefine_Blue;
             }
             m_vecTouchPos.Set(vecTouchPoint.x, vecTouchPoint.y, 0);
+            //m_vecTouchPos = m_vecTouchPos.normalized;
             Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().position;
             m_vecInNormal = vecNormal.normalized;
-            m_vecReflectPos = Vector3.Reflect(m_vecTouchPos, m_vecInNormal);
+            m_vecReflectPos = Vector3.Reflect(m_vecTouchPos, m_vecInNormal).normalized;
 
             m_vecMoveDirection = m_vecReflectPos.normalized * MoveSpeed;
 //            Debug.Log(string.Format("Touch[{0}] Reflect[{1}]", m_vecTouchPos, m_vecReflectPos));
@@ -206,8 +207,8 @@ public class BallMovement : MonoBehaviour
         Gizmos.DrawSphere(m_vecTouchPos, ballPositionRadius);
 
         Gizmos.color = Color.red;
-        Vector3 vecToInDir = -m_vecTouchPos * GizmosLength;
-        Gizmos.DrawLine(m_vecTouchPos, vecToInDir);
+        Vector3 vecToInDir = -(m_vecTouchPos.normalized * GizmosLength);
+        Gizmos.DrawLine(m_vecTouchPos, new Vector3(vecToInDir.x + m_vecTouchPos.x, vecToInDir.y + m_vecTouchPos.y,0));
 
         Vector3 vecNormalExpa = m_vecInNormal * GizmosLength;
         Gizmos.color = Color.blue;
