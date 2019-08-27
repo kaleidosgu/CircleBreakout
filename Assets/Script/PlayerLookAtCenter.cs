@@ -18,10 +18,4 @@ public class PlayerLookAtCenter : MonoBehaviour
         float angle = Mathf.Atan2(direction.x, -direction.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
-
-    //void Update()
-    //{
-    //    Vector3 vecDir = (TransCenter.position - transform.position).normalized;
-    //    transform.up = vecDir;
-    //}
 }

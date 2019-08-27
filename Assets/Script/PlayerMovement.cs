@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode LeftKeyCode;
     public KeyCode RightKeyCode;
     public KeyCode AdjustRadius;
+    public KeyCode StickMoveKeyCode;
 
     public float BigRadius;
     public float SmallRadius;
@@ -22,15 +23,28 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform PenaltyPoint;
 
-    //public Transform BallParent;
-
     public BallMovement ballMove;
+
+    public Transform TransParent;
+
+    public string NameOfAnimationStickMove;
+
+    public float RotateZTime;
+    public float RotateZSpeed;
 
     private float m_posX, m_posY, m_rad = 0f;
     private bool m_bPenaltyPlayer;
+    private Animator m_animatorStick;
+
+    private int m_hashNameStickMove;
+
+    private bool m_bRotateZ;
+    private float m_fRotateZValue;
+    private float m_fCurRotateZTime;
     // Start is called before the first frame update
     void Start()
     {
+        m_animatorStick = GetComponent<Animator>();
         rotationRadius = SmallRadius;
         m_rad = InitArc;
 
@@ -42,16 +56,20 @@ public class PlayerMovement : MonoBehaviour
                 LeftKeyCode = _keycom.KeycodeLeft1P;
                 RightKeyCode = _keycom.KeycodeRight1P;
                 AdjustRadius = _keycom.KeycodeUp1P;
+                StickMoveKeyCode = _keycom.KeycodeDown1P;
             }
             else if (PlayerOwnState == BallDefine.BallStateDefine.BallStateDefine_Red)
             {
                 LeftKeyCode = _keycom.KeycodeLeft2P;
                 RightKeyCode = _keycom.KeycodeRight2P;
                 AdjustRadius = _keycom.KeycodeUp2P;
+                StickMoveKeyCode = _keycom.KeycodeDown2P;
             }
         }
 
         _changePos();
+
+        m_hashNameStickMove = Animator.StringToHash(NameOfAnimationStickMove);
     }
 
     public void Reposition()
@@ -63,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(scoreCom.GamePause == false)
+        if (scoreCom.GamePause == false)
         {
             if (Input.GetKey(LeftKeyCode) == true)
             {
@@ -75,9 +93,9 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (Input.GetKeyUp(AdjustRadius) == true)
             {
-                if(m_bPenaltyPlayer == true)
+                if (m_bPenaltyPlayer == true)
                 {
-                    ballMove.ResetBall(PlayerOwnState,transform);
+                    ballMove.ResetBall(PlayerOwnState, transform);
                     m_bPenaltyPlayer = false;
                 }
                 else
@@ -94,17 +112,54 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
             }
+            if (Input.GetKey(StickMoveKeyCode) == true)
+            {
+                //m_animatorStick.Play("stickMove");
+                //m_animatorStick.enabled = true;
+                m_bRotateZ = true;
+                m_fCurRotateZTime = 0;
+            }
+
+            if(m_bRotateZ == true)
+            {
+                m_fCurRotateZTime += Time.deltaTime;
+                if(m_fCurRotateZTime >= RotateZTime )
+                {
+                    m_bRotateZ = false;
+                    //transform.Rotate(new Vector3(0,0,0), Space.Self);
+                    transform.localRotation = Quaternion.identity;
+                    m_fRotateZValue = 0;
+                }
+                else
+                {
+                    m_fRotateZValue += (Time.deltaTime * RotateZSpeed);
+                    Vector3 vec = new Vector3(0, 0, m_fRotateZValue);
+                    transform.Rotate(vec, Space.Self);
+                }
+            }
+
+            //if(m_animatorStick.enabled == true)
+            //{
+            //    if (m_animatorStick.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !m_animatorStick.IsInTransition(0))
+            //    {
+            //        if (m_animatorStick.GetCurrentAnimatorStateInfo(0).shortNameHash == m_hashNameStickMove)
+            //        {
+            //            m_animatorStick.enabled = false;
+            //        }
+            //    }
+            //}
+
+        
         }
         else
         {
-            if( Input.GetKey(LeftKeyCode) || Input.GetKey(RightKeyCode))
+            if (Input.GetKey(LeftKeyCode) || Input.GetKey(RightKeyCode))
             {
                 //角色确认
                 scoreCom.PlayerConfirm(PlayerOwnState);
             }
         }
     }
-
     public void SetPenaltyPlayer()
     {
         m_bPenaltyPlayer = true;
@@ -117,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
         m_posX = TransCenter.position.x + Mathf.Cos(m_rad) * rotationRadius;
         m_posY = TransCenter.position.y + Mathf.Sin(m_rad) * rotationRadius;
 
-        transform.position = new Vector3(m_posX, m_posY, transform.position.z);
+        TransParent.position = new Vector3(m_posX, m_posY, TransParent.position.z);
 
     }
 
@@ -134,7 +189,6 @@ public class PlayerMovement : MonoBehaviour
 
         }
         m_rad = m_rad + fAddValue;
-        //Debug.Log(string.Format("m_angle = {0}", m_rad) );
 
         if (m_rad >= 360f)
         {
