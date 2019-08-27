@@ -322,6 +322,7 @@ MonoBehaviour:
   detectDistance: 5
   ballPositionRadius: 0.05
   GizmosLength: 1.5
+  SpeedAddition: 0.1
 --- !u!58 &111325818
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -27,6 +27,10 @@ public class BallMovement : MonoBehaviour
 
     public float GizmosLength;
 
+    public float SpeedAddition;
+
+    private float m_fCurrentAddition;
+
     private BallDefine.BallStateDefine m_futureState;
     private Vector2 m_vecMoveDirection;
     private SpriteRenderer m_sprite;
@@ -41,9 +45,13 @@ public class BallMovement : MonoBehaviour
     private Vector3 m_vecReflectPos;
 
     private Vector3 m_vecInNormal;
+
+    private float m_fCurrentBallSpeed;
     // Start is called before the first frame update
     void Start()
     {
+        m_fCurrentBallSpeed = ballSpeed;
+        m_fCurrentAddition = 0;
         m_vecSelf = new Vector2();
         m_selfCollider = GetComponent<Collider2D>();
         m_randArrayState = new BallDefine.BallStateDefine[2];
@@ -88,13 +96,15 @@ public class BallMovement : MonoBehaviour
         {
             if(m_bBallMove == true)
             {
-                transform.Translate(m_vecMoveDirection * Time.deltaTime * ballSpeed);
+                transform.Translate(m_vecMoveDirection * Time.deltaTime * m_fCurrentBallSpeed);
             }
         }
     }
 
     public void ResetBall(BallDefine.BallStateDefine rPlayer,Transform transPlayer)
     {
+        m_fCurrentBallSpeed = ballSpeed;
+        m_fCurrentAddition = 0;
         //transform.position = new Vector3();
         transform.SetParent(null);
         transform.localRotation = new Quaternion();
@@ -118,9 +128,6 @@ public class BallMovement : MonoBehaviour
     {
         if( collision.tag == BallDefine.TagOfPlayer)
         {
-            //Vector3 vecDir = transform.position - collision.GetComponent<Transform>().position;
-            //m_vecMoveDirection = vecDir.normalized * MoveSpeed;
-
             Vector2 vecTouchPoint = new Vector2();
             bool bRes = GetCollisionPoint(out vecTouchPoint, BallDefine.TagOfPlayer);
             if( bRes == false )
@@ -129,8 +136,6 @@ public class BallMovement : MonoBehaviour
             }
             m_vecSelf.Set(transform.position.x, transform.position.y);
             Vector3 vecDir = m_vecSelf - vecTouchPoint;
-            //m_vecMoveDirection = vecDir.normalized * MoveSpeed;
-            //m_vecMoveDirection = vecDir.normalized * MoveSpeed;
             if ( collision.GetComponent<PlayerMovement>().PlayerOwnState == BallDefine.BallStateDefine.BallStateDefine_Blue )
             {
                 m_futureState = BallDefine.BallStateDefine.BallStateDefine_Red;
@@ -140,13 +145,14 @@ public class BallMovement : MonoBehaviour
                 m_futureState = BallDefine.BallStateDefine.BallStateDefine_Blue;
             }
             m_vecTouchPos.Set(vecTouchPoint.x, vecTouchPoint.y, 0);
-            //m_vecTouchPos = m_vecTouchPos.normalized;
             Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().position;
             m_vecInNormal = vecNormal.normalized;
             m_vecReflectPos = Vector3.Reflect(m_vecTouchPos, m_vecInNormal).normalized;
 
             m_vecMoveDirection = m_vecReflectPos.normalized * MoveSpeed;
-//            Debug.Log(string.Format("Touch[{0}] Reflect[{1}]", m_vecTouchPos, m_vecReflectPos));
+
+            m_fCurrentAddition += SpeedAddition;
+            m_fCurrentBallSpeed = ballSpeed * (1 + m_fCurrentAddition);
         }
         else if( collision.tag == BallDefine.TagOfChangeArea )
         {
