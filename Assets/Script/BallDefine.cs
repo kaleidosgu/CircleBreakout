@@ -14,4 +14,5 @@ public class BallDefine
     public static string TagOfPlayer = "Player";
     public static string TagOfChangeArea = "ChangeArea";
     public static string TagOfWall = "Wall";
+    public static string TagOfBlock = "BlockTag";
 }

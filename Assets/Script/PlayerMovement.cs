@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     private bool m_bRotateZ;
     private float m_fRotateZValue;
     private float m_fCurRotateZTime;
+    private bool m_bStickDown;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +77,16 @@ public class PlayerMovement : MonoBehaviour
     {
         m_rad = InitArc;
         _changePos();
+
+        _resetAngle();
+    }
+
+    private void _resetAngle()
+    {
+        transform.localRotation = Quaternion.identity;
+        m_bStickDown = false;
+        m_bRotateZ = false;
+        m_fRotateZValue = 0;
     }
 
     // Update is called once per frame
@@ -116,25 +127,34 @@ public class PlayerMovement : MonoBehaviour
             {
                 //m_animatorStick.Play("stickMove");
                 //m_animatorStick.enabled = true;
-                m_bRotateZ = true;
-                m_fCurRotateZTime = 0;
+                if(m_bRotateZ == false && m_bStickDown == false)
+                {
+                    m_bRotateZ = true;
+                    m_bStickDown = true;
+                    m_fCurRotateZTime = 0;
+                }
+            }
+            if( Input.GetKeyUp(StickMoveKeyCode) == true )
+            {
+                _resetAngle();
             }
 
             if(m_bRotateZ == true)
             {
-                m_fCurRotateZTime += Time.deltaTime;
-                if(m_fCurRotateZTime >= RotateZTime )
+                if (m_bStickDown == true)
                 {
-                    m_bRotateZ = false;
-                    //transform.Rotate(new Vector3(0,0,0), Space.Self);
-                    transform.localRotation = Quaternion.identity;
-                    m_fRotateZValue = 0;
-                }
-                else
-                {
-                    m_fRotateZValue += (Time.deltaTime * RotateZSpeed);
-                    Vector3 vec = new Vector3(0, 0, m_fRotateZValue);
-                    transform.Rotate(vec, Space.Self);
+                    m_fCurRotateZTime += Time.deltaTime;
+                    if (m_fCurRotateZTime >= RotateZTime)
+                    {
+                        m_bRotateZ = false;
+                        m_fRotateZValue = 0;
+                    }
+                    else
+                    {
+                        m_fRotateZValue += (Time.deltaTime * RotateZSpeed);
+                        Vector3 vec = new Vector3(0, 0, m_fRotateZValue);
+                        transform.Rotate(vec, Space.Self);
+                    }
                 }
             }
 

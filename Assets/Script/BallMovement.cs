@@ -135,7 +135,6 @@ public class BallMovement : MonoBehaviour
                 Debug.Assert(false);
             }
             m_vecSelf.Set(transform.position.x, transform.position.y);
-            Vector3 vecDir = m_vecSelf - vecTouchPoint;
             if ( collision.GetComponent<PlayerMovement>().PlayerOwnState == BallDefine.BallStateDefine.BallStateDefine_Blue )
             {
                 m_futureState = BallDefine.BallStateDefine.BallStateDefine_Red;
@@ -147,12 +146,33 @@ public class BallMovement : MonoBehaviour
             m_vecTouchPos.Set(vecTouchPoint.x, vecTouchPoint.y, 0);
             Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().position;
             m_vecInNormal = vecNormal.normalized;
-            m_vecReflectPos = Vector3.Reflect(m_vecTouchPos, m_vecInNormal).normalized;
+            m_vecReflectPos = Vector3.Reflect(m_vecTouchPos.normalized, m_vecInNormal).normalized;
 
             m_vecMoveDirection = m_vecReflectPos.normalized * MoveSpeed;
 
             m_fCurrentAddition += SpeedAddition;
             m_fCurrentBallSpeed = ballSpeed * (1 + m_fCurrentAddition);
+        }
+        else if (collision.tag == BallDefine.TagOfBlock)
+        {
+            Vector2 vecTouchPoint = new Vector2();
+            bool bRes = GetCollisionPoint(out vecTouchPoint, BallDefine.TagOfBlock);
+            if (bRes == false)
+            {
+                Debug.Assert(false);
+            }
+            m_vecSelf.Set(transform.position.x, transform.position.y);
+            
+            m_vecTouchPos.Set(vecTouchPoint.x, vecTouchPoint.y, 0);
+            Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().position;
+            m_vecInNormal = vecNormal.normalized;
+            m_vecReflectPos = Vector3.Reflect(m_vecTouchPos.normalized, m_vecInNormal).normalized;
+
+            m_vecMoveDirection = m_vecReflectPos.normalized * MoveSpeed;
+
+            m_fCurrentAddition += SpeedAddition;
+            m_fCurrentBallSpeed = ballSpeed * (1 + m_fCurrentAddition);
+            collision.gameObject.SetActive(false);
         }
         else if( collision.tag == BallDefine.TagOfChangeArea )
         {
