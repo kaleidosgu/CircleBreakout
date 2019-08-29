@@ -215,4 +215,9 @@ public class PlayerMovement : MonoBehaviour
             m_rad = 0f;
         }
     }
+    private void OnDrawGizmos()
+    {
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(transform.parent.position, TransCenter.position);
+    }
 }

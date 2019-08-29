@@ -144,7 +144,7 @@ public class BallMovement : MonoBehaviour
                 m_futureState = BallDefine.BallStateDefine.BallStateDefine_Blue;
             }
             m_vecTouchPos.Set(vecTouchPoint.x, vecTouchPoint.y, 0);
-            Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().position;
+            Vector3 vecNormal = TransCenter.position - collision.GetComponent<Transform>().parent.position;
             m_vecInNormal = vecNormal.normalized;
             m_vecReflectPos = Vector3.Reflect(m_vecTouchPos.normalized, m_vecInNormal).normalized;
 
